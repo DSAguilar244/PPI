@@ -27,6 +27,7 @@ header nav {
     justify-content: center;
     flex: 1;
     gap: 20px;
+    flex-wrap: wrap;
 }
 
 header nav a {
@@ -55,12 +56,13 @@ header .login-btn:hover {
     background-color: #f57c00;
 }
 
-.container-fluid {
+.container-fluid, .offcanvas-header {
     background-color: #cda42b;
 }
 
-.offcanvas-header {
-    background-color:#cda42b;
+.btn-primary {
+    background-color: #cda42b;
+    border-color: #cda42b;
 }
 
 /* Hero Section */
@@ -206,11 +208,6 @@ footer {
 
 /* Responsive Design */
 @media (max-width: 1024px) {
-    header nav {
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-
     .about-section .section-content div {
         flex: 1 1 calc(50% - 20px);
     }

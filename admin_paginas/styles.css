@@ -4,37 +4,8 @@ body {
     background-color: #000000;
 }
 
-header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: linear-gradient(to right, #d4af37, #b8860b);
-    padding: 10px 20px;
-}
-
-header nav {
-    display: flex;
-    justify-content: center;
-    flex: 1;
-    gap: 30px;
-}
-
-header nav a {
-    color: white;
-    text-decoration: none;
-    font-weight: 700;
-    transition: color 0.3s;
-}
-
-.container-fluid {
+.container-fluid, .offcanvas-header {
     background-color: #cda42b;
-}
-
-.offcanvas-header {
-    background-color:#cda42b;
 }
 
 header nav a:hover {
@@ -55,10 +26,10 @@ header nav a:hover {
     position: relative;
 }
 
-.carousel-inner img {
-    height: 80vh;
-    object-fit: cover;
-    transition: opacity 1s ease-in-out;
+.carousel-item img {
+    object-fit: cover; 
+    height: 100vh;
+    width: 100%; 
 }
 
 .carousel-item {
@@ -102,14 +73,11 @@ header nav a:hover {
 }
 
 @keyframes colorChange {
-    0% {
+    0%, 100% {
         color: #ffffff;
     }
     50% {
         color: #ff9800;
-    }
-    100% {
-        color: #ffffff;
     }
 }
 
@@ -135,32 +103,40 @@ header nav a:hover {
     background: #b8860b;
 }
 
-.news-section {
+.news-section, .team-section, .about-us-section {
     padding: 40px 20px;
     background-color: #111;
     color: white;
 }
 
-.news-section h2 {
-    color: #d4af37;
+.news-section h2, .team-section h2, .about-us-section h2, .services-list h3, .social-media h3 {
+    color: #ffffff;
     text-align: center;
     margin-bottom: 20px;
 }
 
-.news-card {
+.news-section h2 {
+    color: #d4af37;
+}
+
+.news-card, .team-card {
     background-color: #222;
     border: 1px solid #444;
     border-radius: 8px;
     padding: 20px;
     margin: 10px;
     transition: transform 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
 }
 
-.news-card:hover {
+.news-card:hover, .team-card:hover {
     transform: scale(1.05);
 }
 
-.news-card h3 {
+.news-card h3, .team-card h3 {
     color: #ffd700;
     margin-bottom: 10px;
 }
@@ -191,29 +167,17 @@ footer {
     background: #b8860b;
 }
 
-.team-section {
-    padding: 40px 20px;
-    background-color: #111;
-    color: white;
-}
-
-.team-section h2 {
-    color: #ffffff;
-    text-align: center;
-    margin-bottom: 30px;
-}
-
 .team-card {
     text-align: center;
-    background-color: #222;
-    border: 1px solid #444;
     border-radius: 12px;
-    padding: 20px;
-    margin: 10px;
     cursor: pointer;
     overflow: hidden;
     transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
 }
 
 .team-card:hover {
@@ -236,7 +200,7 @@ footer {
     box-shadow: 0 0 10px #ffffff;
 }
 
-.team-photo {
+.team-photo, .modal-photo {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -248,12 +212,6 @@ footer {
     transform: scale(1.1);
 }
 
-.team-card h3 {
-    font-size: 1.5rem;
-    margin-top: 10px;
-    color: #ffffff;
-}
-
 .team-card p {
     color: #ccc;
 }
@@ -262,13 +220,6 @@ footer {
     .team-card:hover h3 {
         color: #ffd700;
     }
-}
-
-.team-photo, .modal-photo {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 50%;
 }
 
 .modal-content {
@@ -289,18 +240,6 @@ footer {
 
 .btn-secondary:hover {
     background-color: #b8860b;
-}
-
-.about-us-section {
-    padding: 40px 20px;
-    background-color: #111;
-    color: white;
-}
-
-.about-us-section h2, .services-list h3, .social-media h3 {
-    color: #ffffff;
-    margin-bottom: 20px;
-    text-align: center;
 }
 
 .about-us-section p {
@@ -345,7 +284,6 @@ footer {
     opacity: 0.8;
 }
 
-/* Consultas de medios para diseño responsivo */
 @media (max-width: 600px) {
     header {
         flex-direction: column;
