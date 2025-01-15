@@ -11,55 +11,56 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-dark bg-dark fixed-top">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">
-                    <img src="../../static/img/logo asesoro mediano.webp" alt="Logo de Asesoro" style="height: 40px; margin-right: 10px;">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
+            <div class="container d-flex align-items-center justify-content-between">
+                <a class="navbar-brand d-flex align-items-center" href="#">
+                    <img src="../../static/img/logo asesoro mediano.webp" alt="Logo de Asesoro" style="height: 50px; margin-right: 10px;">
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+    
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+    
+                <div class="collapse navbar-collapse justify-content-center" id="navbarContent">
+                    <ul class="navbar-nav text-center">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="../home_admin.html">
+                                <i class="fas fa-home me-2"></i>Inicio
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../../admin_paginas/services-admin/services-admin.html">
+                                <i class="fa-solid fa-screwdriver-wrench me-2"></i>Nuestros Servicios
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../../admin_paginas/about-admin/about-admin.html">
+                                <i class="fa-solid fa-address-card me-2"></i>Sobre Nosotros
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../../admin_paginas/blog-admin/blog-admin.html">
+                                <i class="fa-solid fa-blog me-2"></i>Blog Informativo
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../contact-admin/contact-admin.html">
+                                <i class="fa-solid fa-address-book me-2"></i>Contáctanos
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+    
+                <div class="d-flex align-items-center">
+                    <a href="../../index.html" class="btn btn-warning btn-lg px-4 py-2 fw-bold text-dark shadow-sm me-3">
+                        <i class="fa-solid fa-sign-out-alt me-2"></i>Salir
+                    </a>
+                    <a href="#" class="btn btn-dark btn-lg px-4 py-2">
+                        <i class="fa-solid fa-cogs me-2"></i>Panel Administrativo
+                    </a>
+                </div>
             </div>
         </nav>
-
-        
-        <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Menú de Navegación</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="../../admin_paginas/home_admin.html" style="display: inline-flex; align-items: center;">
-                            <i class="fas fa-home" style="margin-right: 8px;"></i> Inicio
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../../admin_paginas/services-admin/services-admin.html">
-                            <i class="fa-solid fa-screwdriver-wrench" style="margin-right: 8px;"></i>Nuestros Servicios</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../../admin_paginas/about-admin/about-admin.html">
-                            <i class="fa-solid fa-address-card" style="margin-right: 8px;"></i>Sobre Nosotros</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../../admin_paginas/blog-admin/blog-admin.html"> <i class="fa-solid fa-blog" style="margin-right: 8px;"></i>Blog Informativo</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"> <i class="fa-solid fa-address-book" style="margin-right: 8px;"></i>Contáctanos</a>
-                    </li>
-                    <div class="mt-4 text-center">
-                        <a href="../../index.html" class="btn btn-primary btn-lg w-100" style="background-color: #cda42b;">
-                            <i class="fa-solid fa-sign-out-alt" style="margin-right: 8px;"></i>Salir
-                        </a>
-                        <a href="#" class="btn btn-dark btn-lg w-100 mt-2">
-                            <i class="fa-solid fa-cogs" style="margin-right: 8px;"></i>Panel Administrativo
-                        </a>
-                    </div>
-                </ul>
-            </div>
-        </div>
     </header>
 
     <section class="contact-section">
@@ -67,9 +68,9 @@
             <h1>Contáctanos</h1>
             <p class="text-center mb-4">Estamos para ayudarte con todas tus consultas legales. Completa el formulario y nos pondremos en contacto contigo lo antes posible.</p>
             <button type="button" class="btn btn-primary float-end"
-        style="background-color: #cda42b; border-color: #cda42b; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-    + Agregar Campos
-</button>
+                style="background-color: #cda42b; border-color: #cda42b; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" onclick="abrirModal()">
+                + Agregar Campos
+            </button>
 
             <form id="contactForm">
                 <div class="mb-3">
@@ -107,24 +108,30 @@
                     <textarea class="form-control" id="message" rows="4" required></textarea>
                 </div>
 
+                <div id="extraFields"></div> <!-- Contenedor para campos adicionales -->
+
                 <button type="submit" class="submit-btn">Enviar Consulta</button>
             </form>
         </div>
     </section>
 
-    <!-- Modal de Confirmación -->
-    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <!-- Modal para agregar preguntas -->
+    <div class="modal fade" id="addQuestionModal" tabindex="-1" aria-labelledby="addQuestionModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="confirmationModalLabel">¡Consulta Enviada Exitosamente!</h5>
+                    <h5 class="modal-title" id="addQuestionModalLabel">Agregar Pregunta</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Tu consulta ha sido enviada correctamente. Nos pondremos en contacto contigo a la mayor brevedad posible.</p>
+                    <div class="mb-3">
+                        <label for="questionInput" class="form-label">Pregunta</label>
+                        <input type="text" class="form-control" id="questionInput" placeholder="Escribe la pregunta aquí...">
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="agregarPregunta()">Agregar Pregunta</button>
                 </div>
             </div>
         </div>
@@ -140,9 +147,48 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Función para abrir el modal de agregar pregunta
+        function abrirModal() {
+            var myModal = new bootstrap.Modal(document.getElementById('addQuestionModal'));
+            myModal.show();
+        }
+
+        // Función para agregar la pregunta al formulario
+        function agregarPregunta() {
+            var pregunta = document.getElementById('questionInput').value;
+            if (pregunta) {
+                var contenedor = document.getElementById('extraFields');
+
+                // Crear un nuevo campo para la pregunta
+                var nuevoCampo = document.createElement('div');
+                nuevoCampo.classList.add('mb-3');
+
+                var label = document.createElement('label');
+                label.classList.add('form-label');
+                label.innerText = pregunta; // El texto de la pregunta
+
+                var input = document.createElement('input');
+                input.type = 'text';
+                input.classList.add('form-control');
+                input.placeholder = "Escribe tu respuesta aquí...";
+
+                nuevoCampo.appendChild(label);
+                nuevoCampo.appendChild(input);
+
+                contenedor.appendChild(nuevoCampo);
+
+                // Cerrar el modal
+                var myModal = bootstrap.Modal.getInstance(document.getElementById('addQuestionModal'));
+                myModal.hide();
+                document.getElementById('questionInput').value = ''; // Limpiar el campo de entrada
+            } else {
+                alert("Por favor, ingrese una pregunta.");
+            }
+        }
+
+        // Manejo de la acción de enviar el formulario
         document.getElementById('contactForm').addEventListener('submit', function(event) {
-            event.preventDefault(); 
-            
+            event.preventDefault();
             var confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
             confirmationModal.show();
             document.getElementById('contactForm').reset();

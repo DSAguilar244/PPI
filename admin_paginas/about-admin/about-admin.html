@@ -11,55 +11,56 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-dark bg-dark fixed-top">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">
-                    <img src="../../static/img/logo asesoro mediano.webp" alt="Logo de Asesoro" style="height: 40px; margin-right: 10px;">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
+            <div class="container d-flex align-items-center justify-content-between">
+                <a class="navbar-brand d-flex align-items-center" href="#">
+                    <img src="../../static/img/logo asesoro mediano.webp" alt="Logo de Asesoro" style="height: 50px; margin-right: 10px;">
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+    
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+    
+                <div class="collapse navbar-collapse justify-content-center" id="navbarContent">
+                    <ul class="navbar-nav text-center">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="../home_admin.html">
+                                <i class="fas fa-home me-2"></i>Inicio
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../../admin_paginas/services-admin/services-admin.html">
+                                <i class="fa-solid fa-screwdriver-wrench me-2"></i>Nuestros Servicios
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../../admin_paginas/about-admin/about-admin.html">
+                                <i class="fa-solid fa-address-card me-2"></i>Sobre Nosotros
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../../admin_paginas/blog-admin/blog-admin.html">
+                                <i class="fa-solid fa-blog me-2"></i>Blog Informativo
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../contact-admin/contact-admin.html">
+                                <i class="fa-solid fa-address-book me-2"></i>Contáctanos
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+    
+                <div class="d-flex align-items-center">
+                    <a href="../../index.html" class="btn btn-warning btn-lg px-4 py-2 fw-bold text-dark shadow-sm me-3">
+                        <i class="fa-solid fa-sign-out-alt me-2"></i>Salir
+                    </a>
+                    <a href="#" class="btn btn-dark btn-lg px-4 py-2">
+                        <i class="fa-solid fa-cogs me-2"></i>Panel Administrativo
+                    </a>
+                </div>
             </div>
         </nav>
-
-        
-        <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Menú de Navegación</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="../home_admin.html" style="display: inline-flex; align-items: center;">
-                            <i class="fas fa-home" style="margin-right: 8px;"></i> Inicio
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../../admin_paginas/services-admin/services-admin.html">
-                            <i class="fa-solid fa-screwdriver-wrench" style="margin-right: 8px;"></i>Nuestros Servicios</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="fa-solid fa-address-card" style="margin-right: 8px;"></i>Sobre Nosotros</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../../admin_paginas/blog-admin/blog-admin.html"> <i class="fa-solid fa-blog" style="margin-right: 8px;"></i>Blog Informativo</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../../admin_paginas/contact-admin/contact-admin.html"> <i class="fa-solid fa-address-book" style="margin-right: 8px;"></i>Contáctanos</a>
-                    </li>
-                    <div class="mt-4 text-center">
-                        <a href="../../index.html" class="btn btn-primary btn-lg w-100" style="background-color: #cda42b;">
-                            <i class="fa-solid fa-sign-out-alt" style="margin-right: 8px;"></i>Salir
-                        </a>
-                        <a href="#" class="btn btn-dark btn-lg w-100 mt-2">
-                            <i class="fa-solid fa-cogs" style="margin-right: 8px;"></i>Panel Administrativo
-                        </a>
-                    </div>
-                </ul>
-            </div>
-        </div>
     </header>
 
     <!-- Hero Section -->
@@ -81,30 +82,89 @@
                     <p>ASESORO nació con la finalidad de apoyar al cumplimiento legal de las empresas.
                         Brindamos asesoría a nuestros clientes, previo a la implementación del negocio y durante la gestión, permitiendo así, que su atención se centre en la producción y generación de recursos para su empresa. Nuestros socios mantienen una destacada trayectoria a nivel de asesoría tributaria empresarial.</p>
                     <img src="../../static/img/logo asesoro mediano.webp" alt="Historia" class="img-fluid mt-3">
+                    <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editHistoryModal">Editar Historia</button>
                 </div>
                 <!-- Mission Section -->
                 <div>
                     <h3>Misión</h3>
                     <p>Ofrecer asistencia jurídica judicial y extrajudicial, brindando seguridad y confianza a través de soluciones integrales y adecuadas a las necesidades de cada cliente.</p>
                     <img src="../../static/img/mision_asesoro.jpg" alt="Misión" class="img-fluid mt-3">
+                    <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editMissionModal">Editar Misión</button>
                 </div>
                 <!-- Vision Section -->
                 <div>
                     <h3>Visión</h3>
                     <p>Ser un estudio jurídico líder en la prestación de Servicios Jurídicos, consolidando su crecimiento con experiencia y eficiencia profesional, ofreciendo un servicio integral de calidad en asesoría y consultoría legal, con resultados ágiles y eficientes, cumpliendo siempre con las expectativas de nuestros clientes, en base a valores y principios fundamentales.</p>
                     <img src="../../static/img/vision_asesoro.jpg" alt="Visión" class="img-fluid mt-3">
+                    <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editVisionModal">Editar Visión</button>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Modales -->
+    <!-- Editar Historia -->
+    <div class="modal fade" id="editHistoryModal" tabindex="-1" aria-labelledby="editHistoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editHistoryModalLabel">Editar Historia</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editHistoryForm">
+                        <textarea class="form-control" id="historyText" rows="5" required></textarea>
+                        <button type="submit" class="btn btn-primary mt-3">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Editar Misión -->
+    <div class="modal fade" id="editMissionModal" tabindex="-1" aria-labelledby="editMissionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editMissionModalLabel">Editar Misión</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editMissionForm">
+                        <textarea class="form-control" id="missionText" rows="5" required></textarea>
+                        <button type="submit" class="btn btn-primary mt-3">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Editar Visión -->
+    <div class="modal fade" id="editVisionModal" tabindex="-1" aria-labelledby="editVisionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editVisionModalLabel">Editar Visión</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editVisionForm">
+                        <textarea class="form-control" id="visionText" rows="5" required></textarea>
+                        <button type="submit" class="btn btn-primary mt-3">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- FAQ Section -->
     <section class="faq-section">
         <div class="container">
             <h2>Preguntas Frecuentes</h2>
             <button type="button" class="btn btn-primary"
-        style="background-color: #cda42b; border-color: #cda42b; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">+ Agregar Preguntas
-</button>
+                style="background-color: #cda42b; border-color: #cda42b; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" 
+                data-bs-toggle="modal" data-bs-target="#addQuestionModal">+ Agregar Preguntas</button>
+            
             <div class="faq-item">
                 <h3>¿Qué servicios ofrece ASESORO?</h3>
                 <p>Ofrecemos asesoría jurídica y tributaria, planificación fiscal, defensa legal y consultoría empresarial personalizada para empresas y particulares.</p>
@@ -120,11 +180,35 @@
         </div>
     </section>
 
-    
+    <!-- Modal para Agregar Preguntas -->
+    <div class="modal fade" id="addQuestionModal" tabindex="-1" aria-labelledby="addQuestionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addQuestionModalLabel">Agregar Nueva Pregunta</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addQuestionForm">
+                        <div class="mb-3">
+                            <label for="questionText" class="form-label">Pregunta</label>
+                            <input type="text" class="form-control" id="questionText" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="answerText" class="form-label">Respuesta</label>
+                            <textarea class="form-control" id="answerText" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <section class="map-section">
         <div class="container">
             <h2>Ubicación</h2>
-                <p>En la Ciudad de Machala, Ayacucho entre 25 de Junio y Rocafuerte, Edificio Veintimilla Segundo Piso.</p>
+            <p>En la Ciudad de Machala, Ayacucho entre 25 de Junio y Rocafuerte, Edificio Veintimilla Segundo Piso.</p>
             <div class="map-container">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1184.2623739986!2d-79.96087038031185!3d-3.258500555885565!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x90330e59d7571303%3A0xad08c0e640483ae3!2sAyacucho%201619%2C%20Machala!5e0!3m2!1ses-419!2sec!4v1736816850739!5m2!1ses-419!2sec" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
             </div>
@@ -137,11 +221,62 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Toggle FAQ answers
         document.querySelectorAll('.faq-item h3').forEach(item => {
             item.addEventListener('click', () => {
                 const parent = item.parentElement;
                 parent.classList.toggle('active');
+                const answer = parent.querySelector('p');
+                answer.style.display = parent.classList.contains('active') ? 'block' : 'none';
             });
+        });
+
+        // Add Question functionality
+        document.getElementById('addQuestionForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const questionText = document.getElementById('questionText').value;
+            const answerText = document.getElementById('answerText').value;
+
+            const faqContainer = document.querySelector('.faq-section');
+            const newFaqItem = document.createElement('div');
+            newFaqItem.classList.add('faq-item');
+            newFaqItem.innerHTML = `
+                <h3>${questionText}</h3>
+                <p>${answerText}</p>
+            `;
+
+            faqContainer.appendChild(newFaqItem);
+
+            // Reset form and close modal
+            document.getElementById('addQuestionForm').reset();
+            const modal = bootstrap.Modal.getInstance(document.getElementById('addQuestionModal'));
+            modal.hide();
+        });
+
+        // Edit Historia, Misión, and Visión functionalities
+        document.getElementById('editHistoryForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const newText = document.getElementById('historyText').value;
+            document.querySelector('.about-section div:nth-child(1) p').textContent = newText;
+            const modal = bootstrap.Modal.getInstance(document.getElementById('editHistoryModal'));
+            modal.hide();
+        });
+
+        document.getElementById('editMissionForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const newText = document.getElementById('missionText').value;
+            document.querySelector('.about-section div:nth-child(2) p').textContent = newText;
+            const modal = bootstrap.Modal.getInstance(document.getElementById('editMissionModal'));
+            modal.hide();
+        });
+
+        document.getElementById('editVisionForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const newText = document.getElementById('visionText').value;
+            document.querySelector('.about-section div:nth-child(3) p').textContent = newText;
+            const modal = bootstrap.Modal.getInstance(document.getElementById('editVisionModal'));
+            modal.hide();
         });
     </script>
 </body>

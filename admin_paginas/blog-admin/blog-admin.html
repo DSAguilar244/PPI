@@ -11,55 +11,56 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-dark bg-dark fixed-top">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">
-                    <img src="../../static/img/logo asesoro mediano.webp" alt="Logo de Asesoro" style="height: 40px; margin-right: 10px;">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
+            <div class="container d-flex align-items-center justify-content-between">
+                <a class="navbar-brand d-flex align-items-center" href="#">
+                    <img src="../../static/img/logo asesoro mediano.webp" alt="Logo de Asesoro" style="height: 50px; margin-right: 10px;">
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+    
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+    
+                <div class="collapse navbar-collapse justify-content-center" id="navbarContent">
+                    <ul class="navbar-nav text-center">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="../home_admin.html">
+                                <i class="fas fa-home me-2"></i>Inicio
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../../admin_paginas/services-admin/services-admin.html">
+                                <i class="fa-solid fa-screwdriver-wrench me-2"></i>Nuestros Servicios
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../../admin_paginas/about-admin/about-admin.html">
+                                <i class="fa-solid fa-address-card me-2"></i>Sobre Nosotros
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../../admin_paginas/blog-admin/blog-admin.html">
+                                <i class="fa-solid fa-blog me-2"></i>Blog Informativo
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../contact-admin/contact-admin.html">
+                                <i class="fa-solid fa-address-book me-2"></i>Contáctanos
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+    
+                <div class="d-flex align-items-center">
+                    <a href="../../index.html" class="btn btn-warning btn-lg px-4 py-2 fw-bold text-dark shadow-sm me-3">
+                        <i class="fa-solid fa-sign-out-alt me-2"></i>Salir
+                    </a>
+                    <a href="#" class="btn btn-dark btn-lg px-4 py-2">
+                        <i class="fa-solid fa-cogs me-2"></i>Panel Administrativo
+                    </a>
+                </div>
             </div>
-        </nav>        
-
-        
-        <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Menú de Navegación</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="../../admin_paginas/home_admin.html" style="display: inline-flex; align-items: center;">
-                            <i class="fas fa-home" style="margin-right: 8px;"></i> Inicio
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../../admin_paginas/services-admin/services-admin.html">
-                            <i class="fa-solid fa-screwdriver-wrench" style="margin-right: 8px;"></i>Nuestros Servicios</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../../admin_paginas/about-admin/about-admin.html">
-                            <i class="fa-solid fa-address-card" style="margin-right: 8px;"></i>Sobre Nosotros</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"> <i class="fa-solid fa-blog" style="margin-right: 8px;"></i>Blog Informativo</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../../admin_paginas/contact-admin/contact-admin.html"> <i class="fa-solid fa-address-book" style="margin-right: 8px;"></i>Contáctanos</a>
-                    </li>
-                    <div class="mt-4 text-center">
-                        <a href="../../index.html" class="btn btn-primary btn-lg w-100" style="background-color: #cda42b;">
-                            <i class="fa-solid fa-sign-out-alt" style="margin-right: 8px;"></i>Salir
-                        </a>
-                        <a href="#" class="btn btn-dark btn-lg w-100 mt-2">
-                            <i class="fa-solid fa-cogs" style="margin-right: 8px;"></i>Panel Administrativo
-                        </a>
-                    </div>
-                </ul>
-            </div>
-        </div>
+        </nav>
     </header>
 
     <!-- Hero Section -->
@@ -70,21 +71,13 @@
         </div>
     </section>
 
-    <!-- About Us Section -->
-    <section class="about-us">
-        <div class="container">
-            <h2>Sobre ASESORO</h2>
-            <p>En ASESORO Estudio Jurídico Tributario, nos especializamos en ofrecer soluciones legales integrales en el ámbito tributario, asesorando a empresas y particulares para asegurar el cumplimiento normativo y optimizar su carga fiscal.</p>
-        </div>
-    </section>
-
     <!-- Blog Section -->
 <section class="blog-section">
     <div class="container">
         <h2>Últimas publicaciones</h2>
-        <button type="button" class="btn btn-primary"
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPostModal"
         style="background-color: #cda42b; border-color: #cda42b; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">+ Añadir publicaciones
-</button>
+        </button>
         <div class="blog-posts">
             <!-- Post 1 -->
             <div class="blog-post">
@@ -114,21 +107,16 @@
     <section class="testimonials">
         <div class="container">
             <h2>Testimonios</h2>
-            <button type="button" class="btn btn-primary"
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTestimonialModal"
         style="background-color: #cda42b; border-color: #cda42b; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">+ Agregar Testimonios
-</button>
+        </button>
             <div class="testimonial">
                 <p>"Gracias a ASESORO, pudimos resolver un conflicto tributario de forma rápida y eficaz. ¡Recomiendo sus servicios ampliamente!"</p>
                 <p>- Juan Pérez, Cliente</p>
-                <div style="text-align: right;">
-                    </button>
-                </div>                                             
             </div>
             <div class="testimonial">
                 <p>"El equipo de ASESORO nos brindó un excelente asesoramiento fiscal, lo que nos permitió mejorar nuestra rentabilidad fiscal. Profesionales de confianza."</p>
                 <p>- Laura Martínez, Cliente Corporativo</p>
-                <div style="text-align: right;">
-                </div>
             </div>
         </div>
     </section>
@@ -144,19 +132,55 @@
         </div>
     </section>
 
-    <!-- Modal -->
-    <div class="modal fade" id="subscribeModal" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+    <!-- Modal for Adding Post -->
+    <div class="modal fade" id="addPostModal" tabindex="-1" aria-labelledby="addPostModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="subscribeModalLabel">¡Te has suscrito correctamente!</h5>
+                    <h5 class="modal-title" id="addPostModalLabel">Añadir nueva publicación</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ¡Gracias por suscribirte a nuestro blog! Estás listo para recibir las últimas noticias y actualizaciones.
+                    <form id="addPostForm">
+                        <div class="mb-3">
+                            <label for="postTitle" class="form-label">Título</label>
+                            <input type="text" class="form-control" id="postTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="postContent" class="form-label">Contenido</label>
+                            <textarea class="form-control" id="postContent" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="postImage" class="form-label">Imagen</label>
+                            <input type="file" class="form-control" id="postImage" accept="image/*" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Agregar Publicación</button>
+                    </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Adding Testimonial -->
+    <div class="modal fade" id="addTestimonialModal" tabindex="-1" aria-labelledby="addTestimonialModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addTestimonialModalLabel">Añadir Testimonio</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addTestimonialForm">
+                        <div class="mb-3">
+                            <label for="testimonialText" class="form-label">Testimonio</label>
+                            <textarea class="form-control" id="testimonialText" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="testimonialName" class="form-label">Nombre del Cliente</label>
+                            <input type="text" class="form-control" id="testimonialName" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Agregar Testimonio</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -177,11 +201,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.getElementById("subscribeForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-            var myModal = new bootstrap.Modal(document.getElementById('subscribeModal'));
-            myModal.show();
-        });
+        const postModal = new bootstrap.Modal(document.getElementById("addPostModal"));
+        const testimonialModal = new bootstrap.Modal(document.getElementById("addTestimonialModal"));
     </script>
 </body>
 </html>

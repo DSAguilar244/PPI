@@ -75,6 +75,11 @@ header .login-btn:hover {
     animation: fadeIn 2s ease-out;
 }
 
+.btn-primary {
+    background-color: #d4af37;
+    color: white;
+}
+
 .hero-blog h1 {
     font-size: 3rem;
     font-weight: 700;
