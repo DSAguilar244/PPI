@@ -81,6 +81,11 @@ header nav a:hover {
     }
 }
 
+
+h2 {
+    text-transform: capitalize;
+}
+
 .hero-content h2 {
     font-size: 1.8em;
     margin-bottom: 20px;

@@ -22,32 +22,29 @@
             <h1>Bienvenido a ASESORO</h1>
             <p>Inicia sesión para continuar</p>
         </div>
-        <form action="#" method="POST">
+        <form id="loginForm">
             <div class="mb-3">
                 <label for="username" class="form-label">Usuario</label>
                 <div class="input-group">
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Ingresa tu usuario" required>
+                    <input type="email" class="form-control" id="username" name="username" placeholder="Ingresa tu correo" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Introduce un correo electrónico válido.">
                     <span class="input-group-text icon-container">
                         <i class="fa-solid fa-user-large"></i>
-                    </span>                    
+                    </span>
                 </div>
-            </div>            
+            </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Contraseña</label>
                 <div class="input-group">
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Ingresa tu contraseña" required>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Ingresa tu contraseña" required 
+                        pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}" 
+                        title="La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, una minúscula, un número y un carácter especial.">
                     <button type="button" class="btn btn-outline-secondary" onclick="togglePasswordVisibility()">
                         <i class="fa fa-eye" id="toggleEye"></i>
                     </button>
                 </div>
             </div>
-            <button type="button" class="btn btn-login" id="btnLogin">Iniciar Sesión</button>
-        </form>
-
-        <div id="alertBox" class="alert-box hidden" aria-live="polite">
-            <span id="alertMessage"></span>
-            <button id="closeAlert" class="close-btn"  style="display: none;" aria-label="Cerrar alerta">&times;</button>
-        </div>        
+            <button type="button" class="btn btn-login" onclick="validateAndRedirect()">Iniciar Sesión</button>
+        </form>          
 
         <div class="login-footer">
             <p>
@@ -182,27 +179,17 @@
             registerSuccessModal.show();
         });
 
-        document.getElementById('btnLogin').addEventListener('click', function () {
-    const username = document.getElementById('username').value.trim();
-    const password = document.getElementById('password').value.trim();
-
-    
-    if (username === '') {
-        showAlert('Por favor, ingresa tu usuario.');
-        return;
-    }
-
-    if (password === '') {
-        showAlert('Por favor, ingresa tu contraseña.');
-        return;
-    }
-
-    
-    showAlert('Inicio de sesión exitoso', true); 
-    setTimeout(() => {
+        function validateAndRedirect() {
+    const form = document.getElementById('loginForm');
+    if (form.checkValidity()) {
+        // Redirigir si el formulario es válido
         window.location.href = '../../admin_paginas/home_admin.html';
-    }, 2000); 
-});
+    } else {
+        // Mostrar validaciones si el formulario no es válido
+        form.reportValidity();
+    }
+}
+
 
 
 function showAlert(message, success = false) {
