@@ -56,16 +56,11 @@ header .login-btn:hover {
     background-color: #f57c00;
 }
 
+
+
 .container-fluid, .offcanvas-header {
     background-color: #cda42b;
 }
-
-.btn-primary {
-    background-color: #cda42b;
-    border-color: #cda42b;
-}
-
-
 
 /* Hero Section */
 .hero-about {
@@ -254,4 +249,13 @@ footer {
     header nav {
         gap: 10px;
     }
+}
+.btn-primary {
+    background-color: #d4af37;
+    border: #d4af37;
+}
+
+.btn:hover {
+    background-color: #d4af37;
+    border: #d4af37;
 }

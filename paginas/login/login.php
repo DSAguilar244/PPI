@@ -1,19 +1,19 @@
 <?php
 session_start();
-?>
-<?php
-// Validación básica en PHP
+
+// Validation in PHP
+$loginError = false;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['username'];
     $password = $_POST['password'];
 
-    // Aquí se deben validar contra una base de datos o archivo
+    // Validate against hardcoded credentials (replace with database in production)
     if ($email === "admin@asesoro.com" && $password === "Admin123!") {
         $_SESSION['usuario'] = $email;
         header("Location: ../../../../admin_paginas/home_admin.php");
         exit();
     } else {
-        echo "<script>alert('Usuario o contraseña incorrectos');</script>";
+        $loginError = true; // Set flag for error modal
     }
 }
 ?>
@@ -27,13 +27,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="styles.css" rel="stylesheet">
+    <link href="/css/login.css" rel="stylesheet">
+    <link rel="icon" href="/static/img/Logo asesoro.png" type="image/x-icon">
 </head>
 
 <body>
     <div class="login-container">
         <div class="btn-back">
-            <button onclick="window.location.href='../../index.html'">Volver</button>
+            <button onclick="window.location.href='../../index.php'">Volver</button>
         </div>
         <div class="logo-container">
             <img src="../../static/img/Logo asesoro.png" alt="Logo">
@@ -76,7 +77,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 
-    <!-- MODALS -->
+    <!-- Error Modal -->
+    <div class="modal fade" id="loginErrorModal" tabindex="-1" aria-labelledby="loginErrorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginErrorModalLabel">Error de Inicio de Sesión</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Has ingresado datos incorrectamente. Por favor, verifica tu usuario y contraseña.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Other Modals -->
     <?php include 'modals.php'; ?>
 
     <script>
@@ -94,6 +113,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
+        // Show error modal if login failed
+        <?php if ($loginError): ?>
+            document.addEventListener('DOMContentLoaded', function () {
+                var loginErrorModal = new bootstrap.Modal(document.getElementById('loginErrorModal'));
+                loginErrorModal.show();
+            });
+        <?php endif; ?>
+
+        // Handle forgot password form
         document.getElementById('forgotPasswordForm').addEventListener('submit', function (e) {
             e.preventDefault();
             var forgotPasswordModal = new bootstrap.Modal(document.getElementById('forgotPasswordModal'));
@@ -102,6 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             forgotPasswordSuccessModal.show();
         });
 
+        // Handle register form
         document.getElementById('registerForm').addEventListener('submit', function (e) {
             e.preventDefault();
             var registerModal = new bootstrap.Modal(document.getElementById('registerModal'));

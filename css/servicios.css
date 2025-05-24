@@ -60,7 +60,6 @@ header .login-btn:hover {
 }
 
 
-
 .btn-primary {
     background-color: #ff9800;
     color: white;
@@ -276,4 +275,13 @@ footer {
     .cta-section p {
         font-size: 0.9rem;
     }
+}
+.btn-primary {
+    background-color: #d4af37;
+    border: #d4af37;
+}
+
+.btn:hover {
+    background-color: #d4af37;
+    border: #d4af37;
 }

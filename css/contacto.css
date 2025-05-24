@@ -255,3 +255,12 @@ footer {
         padding: 15px;
     }
 }
+.btn-primary {
+    background-color: #d4af37;
+    border: #d4af37;
+}
+
+.btn:hover {
+    background-color: #d4af37;
+    border: #d4af37;
+}
