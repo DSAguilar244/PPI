@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $_SESSION['about_content']['history']['text'] = $text;
             if (isset($_FILES['historyImage']) && $_FILES['historyImage']['error'] === UPLOAD_ERR_OK) {
-                $target_dir = __DIR__ . '/uploads/';
+                $target_dir = __DIR__ . '/Uploads/';
                 if (!is_dir($target_dir)) {
                     mkdir($target_dir, 0755, true);
                 }
@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 } elseif ($_FILES['historyImage']['size'] > $max_size) {
                     $_SESSION['messages'][] = ['type' => 'error', 'text' => 'La imagen de historia excede el tamaño máximo de 5MB.'];
                 } elseif (move_uploaded_file($_FILES['historyImage']['tmp_name'], $target_file)) {
-                    $_SESSION['about_content']['history']['image'] = 'uploads/' . $filename;
+                    $_SESSION['about_content']['history']['image'] = 'Uploads/' . $filename;
                 } else {
                     $_SESSION['messages'][] = ['type' => 'error', 'text' => 'Error al subir la imagen de historia. Verifique los permisos del directorio.'];
                 }
@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $_SESSION['about_content']['mission']['text'] = $text;
             if (isset($_FILES['missionImage']) && $_FILES['missionImage']['error'] === UPLOAD_ERR_OK) {
-                $target_dir = __DIR__ . '/uploads/';
+                $target_dir = __DIR__ . '/Uploads/';
                 if (!is_dir($target_dir)) {
                     mkdir($target_dir, 0755, true);
                 }
@@ -105,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 } elseif ($_FILES['missionImage']['size'] > $max_size) {
                     $_SESSION['messages'][] = ['type' => 'error', 'text' => 'La imagen de misión excede el tamaño máximo de 5MB.'];
                 } elseif (move_uploaded_file($_FILES['missionImage']['tmp_name'], $target_file)) {
-                    $_SESSION['about_content']['mission']['image'] = 'uploads/' . $filename;
+                    $_SESSION['about_content']['mission']['image'] = 'Uploads/' . $filename;
                 } else {
                     $_SESSION['messages'][] = ['type' => 'error', 'text' => 'Error al subir la imagen de misión. Verifique los permisos del directorio.'];
                 }
@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $_SESSION['about_content']['vision']['text'] = $text;
             if (isset($_FILES['visionImage']) && $_FILES['visionImage']['error'] === UPLOAD_ERR_OK) {
-                $target_dir = __DIR__ . '/uploads/';
+                $target_dir = __DIR__ . '/Uploads/';
                 if (!is_dir($target_dir)) {
                     mkdir($target_dir, 0755, true);
                 }
@@ -139,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 } elseif ($_FILES['visionImage']['size'] > $max_size) {
                     $_SESSION['messages'][] = ['type' => 'error', 'text' => 'La imagen de visión excede el tamaño máximo de 5MB.'];
                 } elseif (move_uploaded_file($_FILES['visionImage']['tmp_name'], $target_file)) {
-                    $_SESSION['about_content']['vision']['image'] = 'uploads/' . $filename;
+                    $_SESSION['about_content']['vision']['image'] = 'Uploads/' . $filename;
                 } else {
                     $_SESSION['messages'][] = ['type' => 'error', 'text' => 'Error al subir la imagen de visión. Verifique los permisos del directorio.'];
                 }
@@ -162,6 +162,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'answer' => $answer
             ];
             $_SESSION['messages'][] = ['type' => 'success', 'text' => 'Pregunta frecuente agregada exitosamente.'];
+        }
+        header("Location: about-admin.php");
+        exit;
+    }
+
+    // Delete FAQ
+    if (isset($_POST['delete_faq'])) {
+        $faqIndex = filter_input(INPUT_POST, 'faq_index', FILTER_VALIDATE_INT);
+        if ($faqIndex === false || $faqIndex === null || !isset($_SESSION['faqs'][$faqIndex])) {
+            $_SESSION['messages'][] = ['type' => 'error', 'text' => 'Índice de pregunta inválido.'];
+        } else {
+            unset($_SESSION['faqs'][$faqIndex]);
+            $_SESSION['faqs'] = array_values($_SESSION['faqs']); // Reindex array
+            $_SESSION['messages'][] = ['type' => 'success', 'text' => 'Pregunta frecuente eliminada exitosamente.'];
         }
         header("Location: about-admin.php");
         exit;
@@ -363,10 +377,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="container">
             <h2>Preguntas Frecuentes</h2>
             <button type="button" class="btn btn-primary mb-4" style="background-color: #cda42b; border-color: #cda42b; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" data-bs-toggle="modal" data-bs-target="#addQuestionModal">+ Agregar Preguntas</button>
-            <?php foreach ($_SESSION['faqs'] as $faq): ?>
+            <?php foreach ($_SESSION['faqs'] as $index => $faq): ?>
                 <div class="faq-item">
                     <h3><?php echo htmlspecialchars($faq['question']); ?></h3>
                     <p style="display: none;"><?php echo htmlspecialchars($faq['answer']); ?></p>
+                    <button type="button" class="btn btn-danger btn-sm mt-2 delete-faq-btn" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#deleteFaqModal" 
+                            data-faq-index="<?php echo $index; ?>" 
+                            data-faq-question="<?php echo htmlspecialchars($faq['question']); ?>">
+                        <i class="fas fa-trash"></i> Eliminar
+                    </button>
                 </div>
             <?php endforeach; ?>
         </div>
@@ -391,6 +412,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <textarea class="form-control" id="answerText" name="answerText" rows="3" required></textarea>
                         </div>
                         <button type="submit" name="add_faq" class="btn btn-primary">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Deleting FAQ -->
+    <div class="modal fade" id="deleteFaqModal" tabindex="-1" aria-labelledby="deleteFaqModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteFaqModalLabel">Confirmar Eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Estás seguro de que deseas eliminar la pregunta "<span id="delete-faq-question"></span>"? Esta acción no se puede deshacer.</p>
+                    <form id="deleteFaqForm" method="post">
+                        <input type="hidden" name="faq_index" id="delete-faq-index">
+                        <button type="submit" name="delete_faq" class="btn btn-danger">Confirmar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     </form>
                 </div>
             </div>
@@ -433,6 +474,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         });
         document.getElementById('editVisionModal').addEventListener('show.bs.modal', function () {
             document.getElementById('visionText').value = '<?php echo addslashes($_SESSION['about_content']['vision']['text']); ?>';
+        });
+
+        // Handle delete FAQ modal
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteButtons = document.querySelectorAll('.delete-faq-btn');
+            const deleteModal = new bootstrap.Modal(document.getElementById('deleteFaqModal'));
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const faqIndex = this.getAttribute('data-faq-index');
+                    const faqQuestion = this.getAttribute('data-faq-question');
+                    document.getElementById('delete-faq-index').value = faqIndex;
+                    document.getElementById('delete-faq-question').textContent = faqQuestion;
+                    deleteModal.show();
+                });
+            });
         });
     </script>
 </body>

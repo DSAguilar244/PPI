@@ -35,6 +35,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    // Remove Last Custom Question
+    if (isset($_POST['remove_last_question'])) {
+        if (!empty($_SESSION['custom_questions'])) {
+            array_pop($_SESSION['custom_questions']); // Remove the last question
+            $_SESSION['messages'][] = ['type' => 'success', 'text' => 'Última pregunta eliminada exitosamente.'];
+        } else {
+            $_SESSION['messages'][] = ['type' => 'error', 'text' => 'No hay preguntas para eliminar.'];
+        }
+        header("Location: contact-admin.php");
+        exit;
+    }
+
     // Contact Form Submission
     if (isset($_POST['submit_contact'])) {
         $fullName = filter_input(INPUT_POST, 'fullName', FILTER_SANITIZE_STRING);
@@ -155,9 +167,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php $_SESSION['messages'] = []; // Clear messages after display ?>
                 </div>
             <?php endif; ?>
-            <button type="button" class="btn btn-primary float-end mb-4" style="background-color: #cda42b; border-color: #cda42b; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" data-bs-toggle="modal" data-bs-target="#addQuestionModal">
-                + Agregar Campos
-            </button>
+            <div class="d-flex justify-content-end mb-4">
+                <button type="button" class="btn btn-primary me-2" style="background-color: #cda42b; border-color: #cda42b; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" data-bs-toggle="modal" data-bs-target="#addQuestionModal">
+                    + Agregar Campos
+                </button>
+                <form method="post" style="display: inline;">
+                    <button type="submit" name="remove_last_question" class="btn btn-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+                        - Eliminar Última Pregunta
+                    </button>
+                </form>
+            </div>
 
             <form method="post">
                 <div class="mb-3">

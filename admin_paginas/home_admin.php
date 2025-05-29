@@ -5,21 +5,6 @@ include 'header_admin.php';
 $uploadDir = '../static/img/';
 $teamDataFile = '../static/data/team_data.json';
 
-// Handle hero carousel image upload
-$uploadedFiles = [];
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_FILES['images'])) {
-    $files = $_FILES['images'];
-    for ($i = 0; $i < count($files['name']); $i++) {
-        if ($files['error'][$i] === UPLOAD_ERR_OK) {
-            $fileName = 'fondo_' . (count(glob($uploadDir . 'fondo_*.jpg')) + 1) . '.jpg';
-            $filePath = $uploadDir . $fileName;
-            if (move_uploaded_file($files['tmp_name'][$i], $filePath)) {
-                $uploadedFiles[] = $fileName;
-            }
-        }
-    }
-}
-
 // Get list of hero carousel images
 $carouselImages = glob($uploadDir . 'fondo_*.jpg');
 if (empty($carouselImages)) {
@@ -34,30 +19,6 @@ if (empty($carouselImages)) {
 $teamData = [];
 if (file_exists($teamDataFile)) {
     $teamData = json_decode(file_get_contents($teamDataFile), true) ?: [];
-}
-
-// Handle team member form submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['name'])) {
-    $newMember = [
-        'name' => $_POST['name'],
-        'title' => $_POST['title'],
-        'description' => $_POST['description']
-    ];
-
-    // Handle team image upload
-    if (!empty($_FILES['teamImage']['name']) && $_FILES['teamImage']['error'] === UPLOAD_ERR_OK) {
-        $fileName = 'abogado_' . (count(glob($uploadDir . 'abogado_*.jpg')) + 1) . '.jpg';
-        $filePath = $uploadDir . $fileName;
-        if (move_uploaded_file($_FILES['teamImage']['tmp_name'], $filePath)) {
-            $newMember['image'] = $filePath;
-        }
-    } else {
-        $newMember['image'] = '../static/img/default_team.jpg'; // Fallback image
-    }
-
-    // Add new member to team data
-    $teamData[] = $newMember;
-    file_put_contents($teamDataFile, json_encode($teamData, JSON_PRETTY_PRINT));
 }
 
 // Fallback team data
@@ -155,7 +116,6 @@ if (empty($teamData)) {
         </div>
     </div>
 
-    <!-- Team Edit Form -->
     <div class="team-edit-form mt-4">
         <h3 class="text-center">Agregar Nuevo Miembro</h3>
         <form id="teamEditForm" enctype="multipart/form-data" style="max-width: 600px; margin: 0 auto;">
@@ -250,70 +210,161 @@ if (empty($teamData)) {
 </section>
 
 <script>
+document.addEventListener('DOMContentLoaded', function () {
     // Initialize Bootstrap carousels
-    document.addEventListener('DOMContentLoaded', function () {
-        var heroCarousel = document.querySelector('#carouselExampleIndicators');
-        new bootstrap.Carousel(heroCarousel, {
-            interval: 3000,
-            ride: 'carousel'
-        });
+    let heroCarousel = new bootstrap.Carousel(document.querySelector('#carouselExampleIndicators'), {
+        interval: 3000,
+        ride: 'carousel'
+    });
 
-        var teamCarousel = document.querySelector('#teamCarousel');
-        new bootstrap.Carousel(teamCarousel, {
-            interval: 5000,
-            ride: 'carousel'
-        });
+    let teamCarousel = new bootstrap.Carousel(document.querySelector('#teamCarousel'), {
+        interval: 5000,
+        ride: 'carousel'
+    });
 
-        // Handle contact form submission
-        document.getElementById('form-contacto').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const message = document.getElementById('message').value.trim();
-            if (name && email && message) {
-                document.getElementById('modalConfirmacion').style.display = 'block';
-                this.reset();
-            }
-        });
-
-        document.querySelector('.cerrar').addEventListener('click', function() {
-            document.getElementById('modalConfirmacion').style.display = 'none';
-        });
-
-        window.addEventListener('click', function(e) {
-            const modal = document.getElementById('modalConfirmacion');
-            if (e.target == modal) {
-                modal.style.display = 'none';
-            }
-        });
-
-        // Handle hero image upload
-        document.getElementById('imageUpload').addEventListener('change', function(event) {
-            const files = event.target.files;
-            if (files.length > 0) {
-                document.getElementById('imageUploadForm').submit();
-            }
-        });
-
-        // Handle team form submission
-        document.getElementById('teamEditForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-            fetch(window.location.href, {
+    // Handle hero image upload
+    document.getElementById('imageUpload').addEventListener('change', function(event) {
+        const files = event.target.files;
+        if (files.length > 0) {
+            const formData = new FormData(document.getElementById('imageUploadForm'));
+            fetch('upload_handler.php', {
                 method: 'POST',
                 body: formData
-            }).then(response => {
-                if (response.ok) {
-                    window.location.reload(); // Reload to reflect changes
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Hero image upload response:', data); // Debug log
+                if (data.success) {
+                    const carouselInner = document.querySelector('#carouselExampleIndicators .carousel-inner');
+                    const indicators = document.querySelector('#carouselExampleIndicators .carousel-indicators');
+                    const currentItems = carouselInner.querySelectorAll('.carousel-item').length;
+
+                    // Remove active class from current items and indicators
+                    carouselInner.querySelectorAll('.carousel-item').forEach(item => item.classList.remove('active'));
+                    indicators.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+
+                    // Add new images
+                    data.data.forEach((imagePath, index) => {
+                        const carouselItem = document.createElement('div');
+                        carouselItem.className = 'carousel-item' + (index === 0 && currentItems === 0 ? ' active' : '');
+                        carouselItem.innerHTML = `<img src="${imagePath}" class="d-block w-100" alt="Imagen ${currentItems + index + 1}">`;
+                        carouselInner.appendChild(carouselItem);
+
+                        const indicator = document.createElement('button');
+                        indicator.type = 'button';
+                        indicator.dataset.bsTarget = '#carouselExampleIndicators';
+                        indicator.dataset.bsSlideTo = currentItems + index;
+                        indicator.setAttribute('aria-label', `Slide ${currentItems + index + 1}`);
+                        if (index === 0 && currentItems === 0) {
+                            indicator.className = 'active';
+                            indicator.setAttribute('aria-current', 'true');
+                        }
+                        indicators.appendChild(indicator);
+                    });
+
+                    // Refresh carousel
+                    heroCarousel.dispose();
+                    heroCarousel = new bootstrap.Carousel(document.querySelector('#carouselExampleIndicators'), {
+                        interval: 3000,
+                        ride: 'carousel'
+                    });
+                    document.getElementById('imageUploadForm').reset();
                 } else {
-                    alert('Error al agregar el miembro del equipo.');
+                    alert(data.message || 'Error al cargar las imágenes.');
                 }
-            }).catch(error => {
-                console.error('Error:', error);
-                alert('Error al procesar la solicitud.');
+            })
+            .catch(error => {
+                console.error('Hero image upload error:', error);
+                alert('Error al procesar la solicitud de carga de imágenes.');
             });
+        }
+    });
+
+    // Handle team form submission
+    document.getElementById('teamEditForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        fetch('upload_handler.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Team member add response:', data); // Debug log
+            if (data.success) {
+                const carouselInner = document.querySelector('#teamCarousel .carousel-inner');
+                const indicators = document.querySelector('#teamCarousel .carousel-indicators');
+                const currentItems = carouselInner.querySelectorAll('.carousel-item').length;
+
+                // Remove active class from current items and indicators
+                carouselInner.querySelectorAll('.carousel-item').forEach(item => item.classList.remove('active'));
+                indicators.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+
+                // Create new team member carousel item
+                const member = data.data;
+                const carouselItem = document.createElement('div');
+                carouselItem.className = 'carousel-item active text-center';
+                carouselItem.innerHTML = `
+                    <img src="${member.image}" alt="${member.name}" class="d-block mx-auto rounded-circle" style="width: 180px; height: 180px; object-fit: cover;">
+                    <h3 class="mt-3">${member.name}</h3>
+                    <p class="fst-italic">${member.title}</p>
+                    <p class="px-3 mx-auto" style="max-width: 600px; text-align: justify;">${member.description}</p>
+                `;
+                carouselInner.appendChild(carouselItem);
+
+                // Create new indicator
+                const indicator = document.createElement('button');
+                indicator.type = 'button';
+                indicator.dataset.bsTarget = '#teamCarousel';
+                indicator.dataset.bsSlideTo = currentItems;
+                indicator.className = 'active';
+                indicator.setAttribute('aria-current', 'true');
+                indicator.setAttribute('aria-label', `Slide ${currentItems + 1}`);
+                indicators.appendChild(indicator);
+
+                // Refresh carousel and navigate to the new slide
+                teamCarousel.dispose();
+                teamCarousel = new bootstrap.Carousel(document.querySelector('#teamCarousel'), {
+                    interval: 5000,
+                    ride: 'carousel'
+                });
+                teamCarousel.to(currentItems); // Navigate to the new slide
+
+                // Reset form
+                this.reset();
+            } else {
+                alert(data.message || 'Error al agregar el miembro del equipo.');
+            }
+        })
+        .catch(error => {
+            console.error('Team member add error:', error);
+            alert('Error al procesar la solicitud de agregar miembro.');
         });
     });
+
+    // Handle contact form submission
+    document.getElementById('form-contacto').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
+        if (name && email && message) {
+            document.getElementById('modalConfirmacion').style.display = 'block';
+            this.reset();
+        }
+    });
+
+    document.querySelector('.cerrar').addEventListener('click', function() {
+        document.getElementById('modalConfirmacion').style.display = 'none';
+    });
+
+    window.addEventListener('click', function(e) {
+        const modal = document.getElementById('modalConfirmacion');
+        if (e.target == modal) {
+            modal.style.display = 'none';
+        }
+    });
+});
 </script>
 
 <?php

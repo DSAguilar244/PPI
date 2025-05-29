@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif (!isset($_FILES['serviceImage']) || $_FILES['serviceImage']['error'] === UPLOAD_ERR_NO_FILE) {
             $_SESSION['messages'][] = ['type' => 'error', 'text' => 'Debe seleccionar una imagen para el servicio.'];
         } else {
-            $target_dir = __DIR__ . '/uploads/';
+            $target_dir = __DIR__ . '/Uploads/';
             if (!is_dir($target_dir)) {
                 mkdir($target_dir, 0755, true);
             }
@@ -89,11 +89,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'id' => $newId,
                     'name' => $serviceName,
                     'description' => $serviceDescription,
-                    'image' => 'uploads/' . $filename
+                    'image' => 'Uploads/' . $filename
                 ];
                 $_SESSION['messages'][] = ['type' => 'success', 'text' => 'Servicio agregado exitosamente.'];
             } else {
                 $_SESSION['messages'][] = ['type' => 'error', 'text' => 'Error al subir la imagen. Verifique los permisos del directorio.'];
+            }
+        }
+        header("Location: services-admin.php");
+        exit;
+    }
+
+    // Delete service
+    if (isset($_POST['delete_service'])) {
+        $serviceId = filter_input(INPUT_POST, 'service_id', FILTER_VALIDATE_INT);
+        if ($serviceId === false || $serviceId === null) {
+            $_SESSION['messages'][] = ['type' => 'error', 'text' => 'ID de servicio inválido.'];
+        } else {
+            $found = false;
+            foreach ($_SESSION['services'] as $key => $service) {
+                if ($service['id'] == $serviceId) {
+                    $found = true;
+                    // Delete associated image if it exists and is not a default image
+                    if (file_exists(__DIR__ . '/' . $service['image']) && strpos($service['image'], '../../static/img/') !== 0) {
+                        unlink(__DIR__ . '/' . $service['image']);
+                    }
+                    // Remove service from session
+                    unset($_SESSION['services'][$key]);
+                    // Reindex array to avoid gaps
+                    $_SESSION['services'] = array_values($_SESSION['services']);
+                    $_SESSION['messages'][] = ['type' => 'success', 'text' => 'Servicio eliminado exitosamente.'];
+                    break;
+                }
+            }
+            if (!$found) {
+                $_SESSION['messages'][] = ['type' => 'error', 'text' => 'Servicio no encontrado.'];
             }
         }
         header("Location: services-admin.php");
@@ -225,6 +255,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="service-info">
                                 <h3><?php echo htmlspecialchars($service['name']); ?></h3>
                                 <p><?php echo htmlspecialchars($service['description']); ?></p>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#serviceModal<?php echo $service['id']; ?>">
+                                    Solicitar Servicio
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm mt-2 delete-service-btn" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#deleteServiceModal" 
+                                        data-service-id="<?php echo $service['id']; ?>" 
+                                        data-service-name="<?php echo htmlspecialchars($service['name']); ?>">
+                                    <i class="fas fa-trash"></i> Eliminar
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -262,11 +302,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
+    <!-- Modal for Deleting Service -->
+    <div class="modal fade" id="deleteServiceModal" tabindex="-1" aria-labelledby="deleteServiceModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteServiceModalLabel">Confirmar Eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Estás seguro de que deseas eliminar el servicio "<span id="delete-service-name"></span>"? Esta acción no se puede deshacer.</p>
+                    <form id="deleteServiceForm" method="post">
+                        <input type="hidden" name="service_id" id="delete-service-id">
+                        <button type="submit" name="delete_service" class="btn btn-danger">Confirmar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <section class="cta-section text-center">
         <div class="container">
             <h2>¿Listo para mejorar tu situación fiscal?</h2>
-            <p>Contáctanos hoy mismo y encuentra soluciones adaptadas a tus necesidades.</p>
-            <button onclick="window.location.href='../contact-admin/contact-admin.php'">Contáctanos</button>
+            <p>Contáctanos hoy mismo y encuentra soluciones integrales.</p>
+            <button onclick="window.location.href='../contact-admin/contactes-admin.php'">Contáctanos</button>
         </div>
     </section>
 
@@ -281,11 +341,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="serviceModal<?php echo $service['id']; ?>Label"><?php echo htmlspecialchars($service['name']); ?></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <img src="<?php echo htmlspecialchars($service['image']); ?>" alt="<?php echo htmlspecialchars($service['name']); ?>" class="w-100">
-                        <p>Para solicitar este servicio, por favor, completa el siguiente formulario:</p>
+                        <p>Para solicitar este servicio, por favor completa el siguiente formulario:</p>
                         <form method="post">
                             <div class="mb-3">
                                 <label for="name<?php echo $service['id']; ?>" class="form-label">Nombre Completo</label>
@@ -317,5 +377,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endforeach; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Handle delete service modal
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteButtons = document.querySelectorAll('.delete-service-btn');
+            const deleteModal = new bootstrap.Modal(document.getElementById('deleteServiceModal'));
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const serviceId = this.getAttribute('data-service-id');
+                    const serviceName = this.getAttribute('data-service-name');
+                    document.getElementById('delete-service-id').value = serviceId;
+                    document.getElementById('delete-service-name').textContent = serviceName;
+                    deleteModal.show();
+                });
+            });
+        });
+    </script>
 </body>
 </html>

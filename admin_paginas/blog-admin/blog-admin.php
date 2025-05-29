@@ -108,6 +108,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    // Delete Blog Post
+    if (isset($_POST['delete_post'])) {
+        $index = filter_input(INPUT_POST, 'post_index', FILTER_VALIDATE_INT);
+        if ($index !== false && isset($_SESSION['blog_posts'][$index])) {
+            $post = $_SESSION['blog_posts'][$index];
+            if (file_exists($post['image'])) {
+                unlink($post['image']);
+            }
+            unset($_SESSION['blog_posts'][$index]);
+            $_SESSION['blog_posts'] = array_values($_SESSION['blog_posts']);
+            $_SESSION['messages'][] = ['type' => 'success', 'text' => 'Publicación eliminada exitosamente.'];
+        } else {
+            $_SESSION['messages'][] = ['type' => 'error', 'text' => 'Error al eliminar la publicación.'];
+        }
+        header("Location: blog-admin.php");
+        exit;
+    }
+
+    // Delete Testimonial
+    if (isset($_POST['delete_testimonial'])) {
+        $index = filter_input(INPUT_POST, 'testimonial_index', FILTER_VALIDATE_INT);
+        if ($index !== false && isset($_SESSION['testimonials'][$index])) {
+            unset($_SESSION['testimonials'][$index]);
+            $_SESSION['testimonials'] = array_values($_SESSION['testimonials']);
+            $_SESSION['messages'][] = ['type' => 'success', 'text' => 'Testimonio eliminado exitosamente.'];
+        } else {
+            $_SESSION['messages'][] = ['type' => 'error', 'text' => 'Error al eliminar el testimonio.'];
+        }
+        header("Location: blog-admin.php");
+        exit;
+    }
+
     // Newsletter Subscription
     if (isset($_POST['subscribe'])) {
         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
@@ -216,11 +248,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 + Añadir publicaciones
             </button>
             <div class="blog-posts">
-                <?php foreach ($_SESSION['blog_posts'] as $post): ?>
+                <?php foreach ($_SESSION['blog_posts'] as $index => $post): ?>
                     <div class="blog-post">
                         <img src="<?php echo htmlspecialchars($post['image']); ?>" alt="<?php echo htmlspecialchars($post['title']); ?>">
                         <h3><?php echo htmlspecialchars($post['title']); ?></h3>
                         <p><?php echo htmlspecialchars($post['content']); ?></p>
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deletePostModal<?php echo $index; ?>">
+                            Eliminar
+                        </button>
+                    </div>
+                    <!-- Delete Post Modal -->
+                    <div class="modal fade" id="deletePostModal<?php echo $index; ?>" tabindex="-1" aria-labelledby="deletePostModalLabel<?php echo $index; ?>" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deletePostModalLabel<?php echo $index; ?>">Confirmar Eliminación</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    ¿Estás seguro de que deseas eliminar la publicación "<?php echo htmlspecialchars($post['title']); ?>"?
+                                </div>
+                                <div class="modal-footer">
+                                    <form method="post">
+                                        <input type="hidden" name="post_index" value="<?php echo $index; ?>">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        <button type="submit" name="delete_post" class="btn btn-danger">Eliminar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -234,10 +290,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#addTestimonialModal" style="background-color: #cda42b; border-color: #cda42b; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
                 + Agregar Testimonios
             </button>
-            <?php foreach ($_SESSION['testimonials'] as $testimonial): ?>
+            <?php foreach ($_SESSION['testimonials'] as $index => $testimonial): ?>
                 <div class="testimonial">
                     <p>"<?php echo htmlspecialchars($testimonial['text']); ?>"</p>
                     <p>- <?php echo htmlspecialchars($testimonial['name']); ?></p>
+                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteTestimonialModal<?php echo $index; ?>">
+                        Eliminar
+                    </button>
+                </div>
+                <!-- Delete Testimonial Modal -->
+                <div class="modal fade" id="deleteTestimonialModal<?php echo $index; ?>" tabindex="-1" aria-labelledby="deleteTestimonialModalLabel<?php echo $index; ?>" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteTestimonialModalLabel<?php echo $index; ?>">Confirmar Eliminación</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                ¿Estás seguro de que deseas eliminar el testimonio de "<?php echo htmlspecialchars($testimonial['name']); ?>"?
+                            </div>
+                            <div class="modal-footer">
+                                <form method="post">
+                                    <input type="hidden" name="testimonial_index" value="<?php echo $index; ?>">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="submit" name="delete_testimonial" class="btn btn-danger">Eliminar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             <?php endforeach; ?>
         </div>
