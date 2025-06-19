@@ -27,6 +27,11 @@
                 {{ session('error') }}
             </div>
         @endif
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
         <form method="POST" action="{{ route('login') }}">
             @csrf
             <div class="mb-3">
@@ -57,11 +62,33 @@
         </form>
         <div class="login-footer">
             <p>
-                ¿Olvidaste tu contraseña? <a href="#">Recupérala aquí</a>
+                ¿Olvidaste tu contraseña? <a href="#" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">Recupérala aquí</a>
             </p>
-            <p>
-                ¿No tienes una cuenta? <a href="#">Regístrate</a>
-            </p>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="forgotPasswordModalLabel">Recuperar Contraseña</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{{ route('password.email') }}">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="forgotEmail" class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="forgotEmail" name="email" placeholder="Ingresa tu correo" required value="{{ old('email') }}">
+                            @error('email')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
