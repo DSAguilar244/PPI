@@ -56,8 +56,6 @@ header .login-btn:hover {
     background-color: #f57c00;
 }
 
-
-
 .container-fluid, .offcanvas-header {
     background-color: #cda42b;
 }
@@ -66,19 +64,27 @@ header .login-btn:hover {
 .hero-about {
     background-color: #111111;
     color: white;
-    padding: 60px 20px;
+    padding: 60px 20px 40px 20px;
     text-align: center;
     animation: fadeIn 2s ease-out;
+    width: 100vw;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    box-sizing: border-box;
+    border-bottom: 0;
 }
 
 .hero-about h1 {
     font-size: 2.5rem;
     font-weight: 700;
+    margin-bottom: 10px;
+    margin-top: 0;
 }
 
 .hero-about p {
     font-size: 1.2rem;
     margin-top: 10px;
+    margin-bottom: 0;
 }
 
 /* About Section */
@@ -312,6 +318,30 @@ footer.footer {
     .hero-about p {
         font-size: 1rem;
     }
+    .hero-about {
+        padding: 40px 10px 20px 10px;
+        font-size: 1.2rem;
+        width: 100vw;
+        margin-left: 50%;
+        transform: translateX(-50%);
+        box-sizing: border-box;
+    }
+}
+
+@media (max-width: 600px) {
+    .hero-about {
+        width: 100%;
+        margin-left: 0;
+        transform: none;
+        padding: 110px 10px 12px 10px; /* 60px arriba para header sticky */
+        box-sizing: border-box;
+    }
+    .hero-about h1 {
+        font-size: 1.3rem;
+    }
+    .hero-about p {
+        font-size: 0.95rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -320,7 +350,7 @@ footer.footer {
     }
 
     .hero-about h1 {
-        font-size: 1.8rem;
+        font-size: 1.1rem;
     }
 
     header nav {

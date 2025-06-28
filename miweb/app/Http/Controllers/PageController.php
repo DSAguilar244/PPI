@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Subscription;
+use App\Models\ContactSection;
 
 class PageController extends Controller
 {
@@ -28,11 +30,36 @@ class PageController extends Controller
 
     public function contactanos()
     {
-        return view('contactanos');
+        $sections = ContactSection::all()->keyBy('key');
+        return view('contactanos', compact('sections'));
+    }
+
+    public function enviarContacto(Request $request)
+    {
+        // Aquí procesas el formulario, validas y envías el correo o guardas en BD
+        // Ejemplo simple:
+        $request->validate([
+            'fullName' => 'required|string|max:255',
+            'email' => 'required|email',
+            'phone' => 'required',
+            'message' => 'required',
+        ]);
+        // ... lógica para enviar correo o guardar ...
+        return back()->with('success', '¡Consulta enviada correctamente!');
     }
 
     public function login()
     {
         return view('login');
+    }
+
+    public function subscribe(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|unique:subscriptions,email',
+        ]);
+
+        Subscription::create(['email' => $request->email]);
+        return back()->with('success', '¡Te has suscrito correctamente!');
     }
 }

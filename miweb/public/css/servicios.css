@@ -59,7 +59,6 @@ header .login-btn:hover {
     background-color: #cda42b;
 }
 
-
 .btn-primary {
     background-color: #ff9800;
     color: white;
@@ -73,6 +72,10 @@ header .login-btn:hover {
     padding: 60px 20px;
     text-align: center;
     animation: fadeIn 1.5s ease-out;
+    width: 100vw;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    box-sizing: border-box;
 }
 
 .hero-services h1 {
@@ -237,7 +240,6 @@ footer.footer {
     margin-top: 30px;
 }
 
-
 /* Call to action section */
 .cta-section {
     background-color: #111111;
@@ -294,6 +296,15 @@ footer {
         justify-content: flex-start;
     }
 
+    .hero-services {
+        padding: 40px 10px;
+        font-size: 1.2rem;
+        width: 100vw;
+        margin-left: 50%;
+        transform: translateX(-50%);
+        box-sizing: border-box;
+    }
+
     .hero-services h1 {
         font-size: 2.5rem;
     }
@@ -316,6 +327,22 @@ footer {
     }
 }
 
+@media (max-width: 600px) {
+    .hero-services {
+        width: 100%;
+        margin-left: 0;
+        transform: none;
+        padding: 110px 10px 12px 10px; /* 60px arriba para header sticky */
+        box-sizing: border-box;
+    }
+    .hero-services h1 {
+        font-size: 1.3rem;
+    }
+    .hero-services p {
+        font-size: 0.95rem;
+    }
+}
+
 @media (max-width: 480px) {
     header nav {
         flex-direction: column;
@@ -323,7 +350,7 @@ footer {
     }
 
     .hero-services h1 {
-        font-size: 2rem;
+        font-size: 1.1rem;
     }
 
     .hero-services p {
