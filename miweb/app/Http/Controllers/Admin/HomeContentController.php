@@ -23,8 +23,22 @@ class HomeContentController extends Controller
             'image.third_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Handle text content
-        $content = $request->input('content', []);
+        // Procesar lista de ofertas (offer_list[])
+        if ($request->has('offer_list')) {
+            $offers = $request->input('offer_list', []);
+            $html = '<ul>';
+            foreach ($offers as $offer) {
+                $html .= '<li>' . e($offer) . '</li>';
+            }
+            $html .= '</ul>';
+            // Sobrescribe el campo en content para que se guarde como HTML
+            $content = $request->input('content', []);
+            $content['offer_list'] = $html;
+        } else {
+            $content = $request->input('content', []);
+        }
+
+        // Guardar contenido de texto
         foreach ($content as $section => $value) {
             HomeContent::updateOrCreate(
                 ['section' => $section],
@@ -32,7 +46,7 @@ class HomeContentController extends Controller
             );
         }
 
-        // Handle image uploads
+        // Guardar imágenes
         $images = $request->file('image', []);
         foreach ($images as $section => $file) {
             if ($file && $file->isValid()) {
