@@ -36,15 +36,14 @@ class PageController extends Controller
 
     public function enviarContacto(Request $request)
     {
-        // Aquí procesas el formulario, validas y envías el correo o guardas en BD
-        // Ejemplo simple:
+        
         $request->validate([
             'fullName' => 'required|string|max:255',
             'email' => 'required|email',
             'phone' => 'required',
             'message' => 'required',
         ]);
-        // ... lógica para enviar correo o guardar ...
+        
         return back()->with('success', '¡Consulta enviada correctamente!');
     }
 
